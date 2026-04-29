@@ -17,8 +17,6 @@ public class Modelo {
     private Vehiculos vehiculos;
     private Revisiones revisiones;
 
-    public Modelo() {comenzar();}
-
     public void comenzar() {
         clientes = new Clientes();
         vehiculos = new Vehiculos();
@@ -28,6 +26,8 @@ public class Modelo {
     public void terminar() { System.out.println("Modelo terminado");}
 
     public void insertar(Cliente cliente) throws TallerMecanicoExcepcion {
+        Objects.requireNonNull(cliente, "Es imposible que exista un cliente nulo, mucho menos poder insertar un cliente asi");
+        Cliente cliente1 = new Cliente(cliente);
         clientes.insertar(new Cliente(cliente));
     }
 
@@ -36,76 +36,94 @@ public class Modelo {
     }
 
     public void insertar(Revision revision) throws TallerMecanicoExcepcion {
-        Cliente cliente = clientes.buscar(revision.getCliente());
-        Vehiculo vehiculo = vehiculos.buscar(revision.getVehiculo());
-        revisiones.insertar(new Revision(cliente, vehiculo, revision.getFechaInicio()));
+        Objects.requireNonNull(revision, "Si no existe una revision no puedes insertarla");
+        Revision revision1 = new Revision(clientes.buscar(revision.getCliente()), vehiculos.buscar(revision.getVehiculo()), revision.getFechaInicio());
+        revisiones.insertar(revision1);
     }
 
     public Cliente buscar(Cliente cliente) {
-        cliente = Objects.requireNonNull(clientes.buscar(cliente). "No hay ningun cliente que coincida.");
-        return new Cliente(cliente);
+        Objects.requireNonNull(cliente, "NECESITAS QUE HAYA UN CLIENTE PARA PODER BUSCARLO");
+        return new Cliente(clientes.buscar(cliente));
     }
 
     public Vehiculo buscar(Vehiculo vehiculo) {
-        vehiculo = Objects.requireNonNull(vehiculos.buscar(vehiculo), "No hay ningun vehiculo que coincida.");
-        return vehiculo;
+        Objects.requireNonNull(vehiculo, "SI NO EXISTE UN VEHICULO NO PUEDES BUSCARLO!!");
+        return Objects.requireNonNull(vehiculos.buscar(vehiculo), "No existe ningun vehiculo como el que se especifica");
     }
 
     public Revision buscar(Revision revision) {
-        revision = Objects.requireNonNull(revisiones.buscar(revision), "No hay ninguna revision que coincida.");
-        return new Revision(revision);
+        Objects.requireNonNull(revision, "TIENE QUE EXISTIR UNA REVISION ANTES DE SI QUIERA BUSCARLA!");
+        return new Revision(Objects.requireNonNull(revisiones.buscar(revision), "No existe ninguna revision que coincida con la especificada."));
+
     }
 
     public Cliente modificar(Cliente cliente, String nombre, String telefono) throws TallerMecanicoExcepcion {
-        return new Cliente(clientes.modificar(cliente, nombre, telefono));
+        Objects.requireNonNull(cliente, "Si no existe un cliente mucho menos se va a poder modificar...");
+        return clientes.modificar(cliente,nombre,telefono);
     }
 
     public Revision anadirHoras(Revision revision, int horas) throws TallerMecanicoExcepcion {
-        return new Revision(revisiones.anadirHoras(revision, horas));
+        Objects.requireNonNull(revision, "Tiene que existir una revision para poder añadirle horas!");
+        return revisiones.anadirHoras(revision, horas);
     }
 
     public Revision anadirPrecioMaterial(Revision revision, float precioMaterial) throws TallerMecanicoExcepcion {
-        return new Revision(revisiones.anadirPrecioMaterial(revision, precioMaterial));
+        Objects.requireNonNull(revision, "Si no existe una revision no tienes a que añadirle precio de material...");
+        return revisiones.anadirPrecioMaterial(revision, precioMaterial);
     }
 
     public Revision cerrar(Revision revision, LocalDate fechaFin) throws TallerMecanicoExcepcion {
-        return new Revision(revisiones.cerrar(revision, fechaFin));
+        Objects.requireNonNull(revision, "Si no tienes una revision no tienes nada que cerrar pleb");
+        Objects.requireNonNull(revision, "Necesitas una fecha a la que asignar el cierre");
+        return revisiones.cerrar(revision, fechaFin);
     }
 
     public void borrar(Cliente cliente) throws TallerMecanicoExcepcion {
+        Objects.requireNonNull(cliente, "Necesitas un cliente si es que quieres borrarlo en primer lugar!");
         List<Revision> revisionesCliente = revisiones.get(cliente);
-        for (Revision revision : revisionesCliente) {
+        for (Revision revision : revisionesCliente){
             revisiones.borrar(revision);
         }
         clientes.borrar(cliente);
     }
 
     public void borrar(Vehiculo vehiculo) throws TallerMecanicoExcepcion {
+        Objects.requireNonNull(vehiculo, "No se puede borrar un vehiculo que no existe pleb");
         List<Revision> revisionesVehiculo = revisiones.get(vehiculo);
-        for (Revision revision : revisionesVehiculo) {
+        for (Revision revision : revisionesVehiculo){
             revisiones.borrar(revision);
         }
         vehiculos.borrar(vehiculo);
     }
 
     public void borrar(Revision revision) throws TallerMecanicoExcepcion {
+        Objects.requireNonNull(revision, "Si no tienes una revision entonces no puedes borrarla pleb");
         revisiones.borrar(revision);
     }
 
     public List<Cliente> getCliente() {
         List<Cliente> copiaClientes = new ArrayList<>();
         for (Cliente cliente : clientes.get()) {
-            copiaClientes.add(new Cliente(cliente));
+            Cliente cliente1 = new Cliente(cliente);
+            copiaClientes.add(cliente1);
         }
         return copiaClientes;
     }
 
-    public List<Vehiculo> getVehiculos() { return vehiculos.get(); }
+    public List<Vehiculo> getVehiculos() {
+        List<Vehiculo> coleccionVehiculos = new ArrayList<>();
+        for (Vehiculo vehiculo : vehiculos.get()){
+            coleccionVehiculos.add(vehiculo);
+        }
+
+        return coleccionVehiculos;
+    }
 
     public List<Revision> getRevisiones() {
         List<Revision> copiaRevisiones = new ArrayList<>();
         for (Revision revision : revisiones.get()) {
-            copiaRevisiones.add(new Revision(revision));
+            Revision revision1 = new Revision(revision);
+            copiaRevisiones.add(revision1);
         }
         return  copiaRevisiones;
     }

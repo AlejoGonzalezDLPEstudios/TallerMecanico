@@ -1,5 +1,6 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.negocio;
 
+import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Clientes {
     }
 
     public List<Cliente> get() { //este metodo se encarga de regresar una copia de la lista
-        return new ArrayList<>(lClientes);
+        return lClientes;
     }
 
     public void insertar(Cliente cliente) { //En el caso de que no exista, crea un cliente nuevo
@@ -35,11 +36,8 @@ public class Clientes {
         Objects.requireNonNull(cliente, "Si un cliente no existe, no tiene sentido buscarlo.");
 
         int indice = lClientes.indexOf(cliente);
-        if (indice == 1) {
-            return null;
-        }
 
-        return lClientes.get(indice);
+        return (indice != 1 ? lClientes.get(indice) : null);
 
         //Se encarga de buscar y devolver los clientes (o en cualquier caso null si es que el mismo no existe)
     }
@@ -64,7 +62,7 @@ public class Clientes {
         return clienteEncontrado;
     }
 
-    public void borrar(Cliente cliente) { //se encarga de borrar un cleinte siempre y cuando este exista
+    public void borrar(Cliente cliente) throws TallerMecanicoExcepcion { //se encarga de borrar un cleinte siempre y cuando este exista
       Objects.requireNonNull(cliente, "No se puede borrar a un cliente que no existe, no tienes a ZA HANDO como para poder borrar el espacio -_-");
 
       if (!lClientes.remove(cliente)) {

@@ -65,13 +65,13 @@ public class Vista {
 
     private void insertarVehiculo() throws TallerMecanicoExcepcion {
         Consola.mostrarCabecera("Insertar Vehiculo");
-        controlador.insertar(Consola.leerCliente());
+        controlador.insertar(Consola.leerVehiculo());
         System.out.println("Vehiculo insertado correctamente");
     }
 
     private void insertarRevision() throws TallerMecanicoExcepcion {
         Consola.mostrarCabecera("Insertar Revision");
-        controlador.insertar(Consola.leerCliente());
+        controlador.insertar(Consola.leerRevision());
         System.out.println("Revision insertada correctamente");
     }
 
@@ -81,13 +81,13 @@ public class Vista {
         System.out.println((cliente != null) ? cliente : "No existe ningún cliente con el DNI otorgado");
     }
 
-    private void buscarVehiculo() throws TallerMecanicoExcepcion {
+    private void buscarVehiculo()  {
         Consola.mostrarCabecera("Buscar Vehiculo");
         Vehiculo vehiculo = controlador.buscar(Consola.leerVehiculoMatricula());
         System.out.println((vehiculo != null) ? vehiculo : "No existe ningún vehiculo con la matricula otorgada");
     }
 
-    private void buscarRevision() throws TallerMecanicoExcepcion {
+    private void buscarRevision() {
         Consola.mostrarCabecera("Buscar Revision");
         Revision revision = controlador.buscar(Consola.leerRevision());
         System.out.println((revision != null) ? revision : "No existe ninguna revisión vigente para dicho elemento");
@@ -106,6 +106,8 @@ public class Vista {
     }
 
     private void anadirPrecioMaterial() throws TallerMecanicoExcepcion {
+        Consola.mostrarCabecera("Añadir Precio Material de la Revision");
+        controlador.anadirPrecioMaterial(Consola.leerRevision(), Consola.leerPrecioMaterial());
         System.out.println("Precio material añadido exitosamente.");
     }
 
@@ -134,7 +136,7 @@ public class Vista {
     }
 
     private void listarClientes() {
-        Consola.mostrarCabecera("Leer Clientes");
+        Consola.mostrarCabecera("Listar Clientes");
         List<Cliente> clientes = controlador.getClientes();
         if (!clientes.isEmpty()) {
             for (Cliente cliente : clientes) {

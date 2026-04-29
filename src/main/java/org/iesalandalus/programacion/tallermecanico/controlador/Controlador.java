@@ -21,9 +21,10 @@ public class Controlador {
     public Controlador(Modelo modelo, Vista vista) {
         Objects.requireNonNull(modelo, "ERROR: el modelo no tiene la capacidad de ser nulo");
         Objects.requireNonNull(vista, "ERROR: la vista no tiene la capacidad de ser nula");
+        vista.setControlador(this);
         this.modelo = modelo;
         this.vista = vista;
-        this.vista = setControlador(this);
+
     }
 
     public void comenzar() {

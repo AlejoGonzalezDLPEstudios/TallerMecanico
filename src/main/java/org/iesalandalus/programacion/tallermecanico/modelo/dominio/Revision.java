@@ -1,6 +1,7 @@
 package org.iesalandalus.programacion.tallermecanico.modelo.dominio;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.Vehiculos;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,16 +17,25 @@ public class Revision {
     private Vehiculo vehiculo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+    private Vehiculos vehiculos;
     private int horas;
     private float precioMaterial;
 
     public Revision(Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio) {
-        setCliente(cliente);
+       Objects.requireNonNull(cliente, "EL CLIENTE DEBE EXISTIR, NO PUEDE SER NULO!");
+       Objects.requireNonNull(vehiculo, "EL VEHICULO DEBE EXISTIR, NO PUEDE SER NULO!");
+       this.cliente = cliente;
+       this.vehiculo = vehiculo;
+       setFechaInicio(fechaInicio);
+
+        /* setCliente(cliente);
         setVehiculo(vehiculo);
         setFechaInicio(fechaInicio);
         fechaFin = null;
         horas = 0;
         precioMaterial = 0;
+
+        */
     }
 
     public Revision(Revision revision) {
@@ -40,19 +50,25 @@ public class Revision {
 
     public Cliente getCliente() {return cliente;}
 
+    public Vehiculo getVehiculo() {return vehiculo;}
+
+    public LocalDate getFechaInicio() {return fechaInicio;}
+
+    public Vehiculos getVehiculos() { return vehiculos;}
+
     private void setCliente(Cliente cliente) {
         Objects.requireNonNull(cliente, "El cliente no puede ser nulo.");
         this.cliente = cliente;
     }
 
-    public Vehiculo getVehiculo() {return vehiculo;}
+    /*
 
     private void setVehiculo(Vehiculo vehiculo){
         Objects.requireNonNull(vehiculo, "El vehiculo no puede ser nulo.");
         this.vehiculo = vehiculo;
     }
 
-    public LocalDate getFechaInicio() {return fechaInicio;}
+     */
 
     private void setFechaInicio(LocalDate fechaInicio) {
         Objects.requireNonNull(fechaInicio, "La fecha de inicio no puede ser nula.");

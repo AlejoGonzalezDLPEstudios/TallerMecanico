@@ -38,6 +38,16 @@ public class Revisiones {
         return revisionesVehiculo;
     }
 
+    public List<Revision> get(Vehiculos vehiculo) {
+        List<Revision> revisionesVehiculos = new ArrayList<>();
+        for (Revision revision : coleccionRevisiones) {
+            if (revision.getVehiculos().equals(new Vehiculos())) {
+                revisionesVehiculos.add(revision);
+            }
+        }
+        return  revisionesVehiculos;
+    }
+
     public void insertar(Revision revision) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(revision, "No puedes insertar una revision que en primer lugar ni existe");
         comprobarRevision(revision.getCliente(), revision.getVehiculo(), revision.getFechaInicio());
@@ -103,4 +113,6 @@ public class Revisiones {
         }
         coleccionRevisiones.remove(revision);
     }
+
+
 }

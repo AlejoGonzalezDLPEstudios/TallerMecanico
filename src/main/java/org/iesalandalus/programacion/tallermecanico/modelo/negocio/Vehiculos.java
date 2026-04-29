@@ -24,13 +24,13 @@ public class Vehiculos {
         coleccionVehiculos.add(vehiculo);
     }
 
-    public Vehiculo buscar(Vehiculos vehiculo){
+    public Vehiculo buscar(Vehiculo vehiculo){
         Objects.requireNonNull(vehiculo, "Para buscar un vehiculo, este debe de existir, NO PUEDE SER NULO!");
         int indice = coleccionVehiculos.indexOf(vehiculo);
         return (indice != -1 ? coleccionVehiculos.get(indice) : null);
     }
 
-    public void borrar(Vehiculos vehiculo) throws TallerMecanicoExcepcion {
+    public void borrar(Vehiculo vehiculo) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(vehiculo, "Para poder borrar un vehiculo, necesitas que exista, ESTE NO PUEDE SER NULO!");
         Vehiculo buscado = buscar(vehiculo);
 
