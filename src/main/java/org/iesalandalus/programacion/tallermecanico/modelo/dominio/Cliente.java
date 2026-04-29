@@ -8,9 +8,9 @@ import java.util.Objects;
 
 public class Cliente {
 
-    public static final String ER_NOMBRE = "^[A-ZÁÉÍÓÚÑ][a-za-áéíóúñ]+( [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$";
+    public static final String ER_NOMBRE = "([A-ZÁÉÚÍÓÑ][a-záéíóúñ]+[ ]?)+";
     public static final String ER_DNI = "\\d{8}[A-Z]";
-    public static final String ER_TELEFONO = "^[0-9]{9}$";
+    public static final String ER_TELEFONO = "\\d{9}";
 
     private String nombre;
     private String dni;
