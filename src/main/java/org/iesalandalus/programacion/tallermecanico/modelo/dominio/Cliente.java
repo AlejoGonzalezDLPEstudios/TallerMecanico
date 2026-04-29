@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Cliente {
 
     public static final String ER_NOMBRE = "^[A-ZÁÉÍÓÚÑ][a-za-áéíóúñ]+( [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$";
-    public static final String ER_DNI = "^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]*$";
+    public static final String ER_DNI = "\\d{8}[A-Z]";
     public static final String ER_TELEFONO = "^[0-9]{9}$";
 
     private String nombre;
